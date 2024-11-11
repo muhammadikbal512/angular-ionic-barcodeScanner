@@ -1,20 +1,51 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="dark" fill="clear" routerLink="cart">
+        <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+
+        <ion-badge color="light">
+          <ion-text color="tertiary">{{totalItems}}</ion-text>
+        </ion-badge>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-item lines="none" class="ion-margin-vertical">
+    <ion-label>
+      Hello
+      <p>
+        <ion-text color="dark">Coding Technique</ion-text>
+      </p>
+    </ion-label>
+    <ion-thumbnail slot="end">
+      <img [src]="'assets/imgs/avatar.jpg'" />
+    </ion-thumbnail>
+  </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-list-header>Your Insights</ion-list-header>
+
+  <ion-row class="ion-margin">
+    @for (item of cardsItem; track item.id) {
+    <ion-col size="6" class="ion-text-center" [routerLink]="item.routerLink">
+      <ion-card color="light" (click)="item.click ? item.click() : null">
+        <ion-thumbnail [style.background]="item.backgroundColor">
+          <ion-icon [name]="item.icon"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>{{item.label}}</ion-label>
+      </ion-card>
+    </ion-col>
+    }
+  </ion-row>
+
+  <ion-toast
+    [isOpen]="isToast"
+    [message]="toastData?.Message"
+    [position]="'bottom'"
+    [color]="toastData?.color"
+    [duration]="3000"
+    (didDismiss)="isToast = false"
+  ></ion-toast>
 </ion-content>
